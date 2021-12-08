@@ -20,9 +20,9 @@
     <div style="margin: auto; width: 500px;" class="pt-5">
         <h4>
             Book maintence master
-            <a href="" style="float: right;">Đóng</a>
+            <a href="" style="float: right; text-decoration:none;">Đóng</a>
         </h4>
-        <?php echo Form::open(['action' => 'book/add', 'method' => 'post']); ?>
+        <?php echo Form::open(['action' => 'book/checkButtonClicked', 'method' => 'post']); ?>
 
         <!-- Book ID + Tra cứu -->
         <div>
@@ -32,7 +32,7 @@
             ?>
             <div style="overflow: hidden; padding-right: .5rem">
                 <?php
-                echo Form::input('id', '', ['class' => 'form-control', 'style' => 'width:80%']);
+                echo Form::input('id', $bookId, ['class' => 'form-control', 'style' => 'width:80%']);
 
                 ?>
             </div>
@@ -43,7 +43,7 @@
         <div style="padding-top: 10px;">
             <?php
             echo Form::label('Book title :', 'title');
-            echo Form::input('title', '', ['class' => 'form-control']);
+            echo Form::input('title', $bookTitle, ['class' => 'form-control']);
             ?>
         </div>
 
@@ -51,15 +51,15 @@
         <div style="padding-top: 10px">
             <?php
             echo Form::label('Tên tác giã :', 'author');
-            echo Form::input('author', '', ['class' => 'form-control']);
+            echo Form::input('author', $author, ['class' => 'form-control']);
             ?>
         </div>
 
         <!-- Nhà xuất bản -->
         <div style="padding-top: 10px;">
             <?php
-            echo Form::label('Nhà xuất bản :', 'producer');
-            echo Form::input('producer', '', ['class' => 'form-control']);
+            echo Form::label('Nhà xuất bản :', 'publisher');
+            echo Form::input('publisher', $publisher, ['class' => 'form-control']);
             ?>
         </div>
 
@@ -72,7 +72,7 @@
             <div class="d-flex flex-row">
                 <div style="width: 25%;">
                     <?php
-                    echo Form::input('year', '', ['class' => 'form-control', 'style' => 'text-align:center;']);
+                    echo Form::input('year', $year, ['class' => 'form-control', 'style' => 'text-align:center;']);
                     ?>
                 </div>
                 <div class="pt-2">
@@ -81,7 +81,7 @@
 
                 <div style="width: 10%;">
                     <?php
-                    echo Form::input('month', '', ['class' => 'form-control', 'style' => 'text-align:center;']);
+                    echo Form::input('month', $month, ['class' => 'form-control', 'style' => 'text-align:center;']);
                     ?>
                 </div>
                 <div class="pt-2">
@@ -90,7 +90,7 @@
 
                 <div style="width: 10%;">
                     <?php
-                    echo Form::input('date', '', ['class' => 'form-control', 'style' => 'text-align:center;']);
+                    echo Form::input('date', $date, ['class' => 'form-control', 'style' => 'text-align:center;']);
                     ?>
                 </div>
                 <div class="pt-2">
@@ -118,6 +118,12 @@
         <?php echo Form::close(); ?>
     </div>
 </body>
+
+<?php if (isset($serverMessage)) : ?>
+    <script>
+        alert("<?php echo $serverMessage; ?>");
+    </script>
+<?php endif; ?>
 
 
 
