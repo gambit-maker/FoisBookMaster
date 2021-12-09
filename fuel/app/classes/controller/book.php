@@ -77,40 +77,44 @@ class Controller_Book extends Controller
         }
         // xử lý thông tin khi nhấn thêm
         else if (isset($_POST["them_btn"])) {
-            // lấy thông tin Input
-            $data['bookId'] = Input::post('id');
-            $data['bookTitle'] = Input::post('title');
-            $data['author'] = Input::post('author');
-            $data['publisher'] = Input::post('publisher');
-            $data['year'] = Input::post('year');
-            $data['month'] = Input::post('month');
-            $data['date'] = Input::post('date');
-            if (!checkdate($data['month'], $data['date'], $data['year'])) {
-                $data['serverMessage'] = $message['MSG0016'];
+            try {
+                // lấy thông tin Input
+                $data['bookId'] = Input::post('id');
+                $data['bookTitle'] = Input::post('title');
+                $data['author'] = Input::post('author');
+                $data['publisher'] = Input::post('publisher');
+                $data['year'] = Input::post('year');
+                $data['month'] = Input::post('month');
+                $data['date'] = Input::post('date');
+                if (!checkdate($data['month'], $data['date'], $data['year'])) {
+                    $data['serverMessage'] = $message['MSG0016'];
+                    return Response::forge(View::forge('bookmaster/book', $data, false));
+                }
+                // xử lý BookId        
+                if (Model_Book::find($data['bookId'])) {
+                    $data['serverMessage'] = str_replace('****', $data['bookId'], $message['MSG0011']);
+                    return Response::forge(View::forge('bookmaster/book', $data, false));
+                } else {
+                    // đăng ký sách
+                    $model = new Model_Book();
+                    $model->book_id = $data['bookId'];
+                    $model->book_title = $data['bookTitle'];
+                    $model->author_name = $data['author'];
+                    $model->publisher = $data['publisher'];
+                    $model->publication_day = $data['year'] . "-" . $data['month'] . "-" . $data['date'];
+                    //set time zone vietnam
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    $model->insert_day = date("Y-m-d h:i:sa");
+                    $model->save();
+
+                    $data['serverMessage'] = $message['MSG0012'];
+                    return Response::forge(View::forge('bookmaster/book', $data, false));
+                }
+            } catch (Exception $e) {
+                Debug::dump($e);
+                $data['serverMessage'] = $message['MSG0005'];
                 return Response::forge(View::forge('bookmaster/book', $data, false));
             }
-            // xử lý BookId        
-            if (Model_Book::find($data['bookId'])) {
-                $data['serverMessage'] = str_replace('****', $data['bookId'], $message['MSG0011']);
-                return Response::forge(View::forge('bookmaster/book', $data, false));
-            } else {
-                // đăng ký sách
-                $model = new Model_Book();
-                $model->book_id = $data['bookId'];
-                $model->book_title = $data['bookTitle'];
-                $model->author_name = $data['author'];
-                $model->publisher = $data['publisher'];
-                $model->publication_day = $data['year'] . "-" . $data['month'] . "-" . $data['date'];
-                //set time zone vietnam
-                date_default_timezone_set('Asia/Ho_Chi_Minh');
-                $model->insert_day = date("Y-m-d h:i:sa");
-                $model->save();
-
-
-                $data['serverMessage'] = $message['MSG0012'];
-                return Response::forge(View::forge('bookmaster/book', $data, false));
-            }
-            return Response::forge(View::forge('bookmaster/book', $data, false));
         } else {
             return Response::forge(View::forge('bookmaster/book', $data, false));
         }
