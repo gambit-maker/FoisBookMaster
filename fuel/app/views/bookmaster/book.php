@@ -8,6 +8,7 @@
     <title>Document</title>
     <?php
 
+    use Fuel\Core\Asset;
     use Fuel\Core\Form;
 
     echo Asset::css('bootstrap.min.css');
@@ -28,11 +29,12 @@
         <div>
             <?php
             echo Form::label('Book ID :', 'id');
-            echo Form::button('tracuu_btn', 'Tra cứu', ['class' => 'btn btn-primary', 'style' => 'float: right; margin-top:30px']);
+            echo Form::button('tracuu_btn', 'Tra cứu', ['class' => 'btn btn-primary', 'style' => 'float: right; margin-top:30px', 'id' => 'tracuu_btn']);
+            // 'onclick' => 'checkValueBookId()'
             ?>
             <div style="overflow: hidden; padding-right: .5rem">
                 <?php
-                echo Form::input('id', $bookId, ['class' => 'form-control', 'style' => 'width:80%']);
+                echo Form::input('id', $bookId, ['id' => 'bookId', 'class' => 'form-control', 'style' => 'width:80%']);
 
                 ?>
             </div>
@@ -43,15 +45,15 @@
         <div style="padding-top: 10px;">
             <?php
             echo Form::label('Book title :', 'title');
-            echo Form::input('title', $bookTitle, ['class' => 'form-control']);
+            echo Form::input('title', $bookTitle, ['class' => 'form-control', 'id' => 'book_title']);
             ?>
         </div>
 
         <!-- Tên tác giã -->
         <div style="padding-top: 10px">
             <?php
-            echo Form::label('Tên tác giã :', 'author');
-            echo Form::input('author', $author, ['class' => 'form-control']);
+            echo Form::label('Tên tác giả :', 'author');
+            echo Form::input('author', $author, ['class' => 'form-control', 'id' => 'author']);
             ?>
         </div>
 
@@ -59,7 +61,7 @@
         <div style="padding-top: 10px;">
             <?php
             echo Form::label('Nhà xuất bản :', 'publisher');
-            echo Form::input('publisher', $publisher, ['class' => 'form-control']);
+            echo Form::input('publisher', $publisher, ['class' => 'form-control', 'id' => 'publisher']);
             ?>
         </div>
 
@@ -72,7 +74,7 @@
             <div class="d-flex flex-row">
                 <div style="width: 25%;">
                     <?php
-                    echo Form::input('year', $year, ['class' => 'form-control', 'style' => 'text-align:center;']);
+                    echo Form::input('year', $year, ['class' => 'form-control', 'style' => 'text-align:center;', 'id' => 'year']);
                     ?>
                 </div>
                 <div class="pt-2">
@@ -81,7 +83,7 @@
 
                 <div style="width: 10%;">
                     <?php
-                    echo Form::input('month', $month, ['class' => 'form-control', 'style' => 'text-align:center;']);
+                    echo Form::input('month', $month, ['class' => 'form-control', 'style' => 'text-align:center;', 'id' => 'month']);
                     ?>
                 </div>
                 <div class="pt-2">
@@ -90,7 +92,7 @@
 
                 <div style="width: 10%;">
                     <?php
-                    echo Form::input('date', $date, ['class' => 'form-control', 'style' => 'text-align:center;']);
+                    echo Form::input('date', $date, ['class' => 'form-control', 'style' => 'text-align:center;', 'id' => 'date']);
                     ?>
                 </div>
                 <div class="pt-2">
@@ -100,7 +102,7 @@
 
             <div class="d-flex flex-row pt-3 float-right">
                 <div class="pl-5">
-                    <?php echo Form::button('them_btn', 'Thêm', ['class' => 'btn btn-primary', 'style' => 'width: 80px']) ?>
+                    <?php echo Form::button('them_btn', 'Thêm', ['class' => 'btn btn-primary', 'style' => 'width: 80px', 'id' => 'them_btn']) ?>
                 </div>
                 <div class="pl-5">
                     <?php echo Form::button('update_btn', 'Update', ['class' => 'btn btn-warning', 'style' => 'width: 80px']) ?>
@@ -118,13 +120,14 @@
         <?php echo Form::close(); ?>
     </div>
 </body>
-
-<?php if (isset($serverMessage)) : ?>
-    <script>
+<script>
+    <?php if (isset($serverMessage)) : ?>
         alert("<?php echo $serverMessage; ?>");
-    </script>
-<?php endif; ?>
+    <?php endif; ?>
+</script>
 
 
+
+<?php echo Asset::js('checkValidation.js'); ?>
 
 </html>
