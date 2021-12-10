@@ -19,7 +19,7 @@ return array(
 	 *
 	 */
 
-	'_root_' => 'book/checkButtonClicked',
+	'_root_' => 'welcome/index',
 
 	/**
 	 * -------------------------------------------------------------------------
@@ -40,4 +40,5 @@ return array(
 	 */
 
 	'hello(/:name)?' => array('welcome/hello', 'name' => 'hello'),
+	'book/checkButtonClicked' => ['book/checkButtonClicked', 'name' => 'bookmaster']
 );

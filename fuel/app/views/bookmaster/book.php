@@ -16,11 +16,12 @@
     ?>
 </head>
 
-<body>
-    <div style="margin: auto; width: 500px;" class="pt-5">
+<body style="background-color: #F5EEDC;">
+
+    <div style="margin: auto; width: 500px;" class="pt-5 ">
         <h4>
             Book maintence master
-            <a href="" style="float: right; text-decoration:none;">Đóng</a>
+            <a href="" id="close_anchor" style="float: right; text-decoration:none;">Đóng</a>
         </h4>
         <?php echo Form::open(['action' => 'book/checkButtonClicked', 'method' => 'post']); ?>
 

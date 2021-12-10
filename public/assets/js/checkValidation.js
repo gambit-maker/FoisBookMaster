@@ -3,6 +3,7 @@ const themBtn = document.querySelector("#them_btn");
 const updateBtn = document.querySelector("#update_btn");
 const xoaBtn = document.querySelector("#xoa_btn");
 const clearBtn = document.querySelector("#clear_btn");
+const closeAnchor = document.querySelector("#close_anchor");
 
 const bookId = document.querySelector("#bookId");
 const bookTitlte = document.querySelector("#book_title");
@@ -148,4 +149,8 @@ clearBtn.addEventListener("click", (e) => {
   month.value = "";
   date.value = "";
   e.preventDefault();
+});
+
+closeAnchor.addEventListener("click", function () {
+  window.close();
 });
