@@ -1,6 +1,9 @@
 const tracuuBtn = document.querySelector("#tracuu_btn");
 const themBtn = document.querySelector("#them_btn");
 const updateBtn = document.querySelector("#update_btn");
+const xoaBtn = document.querySelector("#xoa_btn");
+const clearBtn = document.querySelector("#clear_btn");
+
 const bookId = document.querySelector("#bookId");
 const bookTitlte = document.querySelector("#book_title");
 const author = document.querySelector("#author");
@@ -93,12 +96,17 @@ function checkAllInput() {
   return message;
 }
 
-tracuuBtn.addEventListener("click", (e) => {
+function checkBookId() {
   const message = checkValue2Condition(
     bookId.value,
     messageObj["MSG0001"],
     messageObj["MSG0002"]
   );
+  return message;
+}
+
+tracuuBtn.addEventListener("click", (e) => {
+  const message = checkBookId();
   if (message !== null && message !== "") {
     alert(message);
     e.preventDefault();
@@ -121,4 +129,23 @@ updateBtn.addEventListener("click", (e) => {
     console.log(message);
     e.preventDefault();
   }
+});
+
+xoaBtn.addEventListener("click", (e) => {
+  const message = checkBookId();
+  if (message !== null && message !== "") {
+    alert(message);
+    e.preventDefault();
+  }
+});
+
+clearBtn.addEventListener("click", (e) => {
+  bookId.value = "";
+  bookTitlte.value = "";
+  author.value = "";
+  publisher.value = "";
+  year.value = "";
+  month.value = "";
+  date.value = "";
+  e.preventDefault();
 });

@@ -14,7 +14,6 @@
     echo Asset::css('bootstrap.min.css');
 
     ?>
-
 </head>
 
 <body>
@@ -108,10 +107,10 @@
                     <?php echo Form::button('update_btn', 'Update', ['class' => 'btn btn-warning', 'style' => 'width: 80px', 'id' => 'update_btn']) ?>
                 </div>
                 <div class="pl-5">
-                    <?php echo Form::button('xoa_btn', 'Xóa', ['class' => 'btn btn-danger', 'style' => 'width: 80px']) ?>
+                    <?php echo Form::button('xoa_btn', 'Xóa', ['class' => 'btn btn-danger', 'style' => 'width: 80px', 'id' => 'xoa_btn']) ?>
                 </div>
                 <div class="pl-5">
-                    <?php echo Form::button('clear_btn', 'Clear', ['class' => 'btn btn-secondary', 'style' => 'width: 80px']) ?>
+                    <?php echo Form::button('clear_btn', 'Clear', ['class' => 'btn btn-secondary', 'style' => 'width: 80px', 'id' => 'clear_btn']) ?>
                 </div>
             </div>
         </div>

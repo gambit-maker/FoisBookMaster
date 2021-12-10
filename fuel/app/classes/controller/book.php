@@ -67,7 +67,7 @@ class Controller_Book extends Controller
 
                 return Response::forge(View::forge('bookmaster/book', $data, false));
             } catch (Exception $e) { // xử lý ngoại lệ server
-                Debug::dump($e);
+                // Debug::dump($e);
                 $data['bookId'] = $bookId;
                 $data['serverMessage'] = $message['MSG0005'];
                 return Response::forge(View::forge('bookmaster/book', $data, false));
@@ -108,7 +108,7 @@ class Controller_Book extends Controller
                     return Response::forge(View::forge('bookmaster/book', $data, false));
                 }
             } catch (Exception $e) { // xử lý ngoại lệ server                
-                Debug::dump($e);
+                // Debug::dump($e);
                 $data['serverMessage'] = $message['MSG0005'];
                 return Response::forge(View::forge('bookmaster/book', $data, false));
             }
@@ -145,10 +145,26 @@ class Controller_Book extends Controller
                 $data['serverMessage'] = str_replace('****', $data['bookId'], $message['MSG0014']);
                 return Response::forge(View::forge('bookmaster/book', $data, false));
             } catch (Exception $e) { // xử lý ngoại lệ server
-                Debug::dump($e);
+                // Debug::dump($e);
                 $data['serverMessage'] = $message['MSG0005'];
                 return Response::forge(View::forge('bookmaster/book', $data, false));
             }
+        }
+        // xử lý thông tin khi nhấn xóa dữ liệu
+        else if (isset($_POST["xoa_btn"])) {
+            $bookId = Input::post('id');
+            // kiểm tra BookId tồn tại
+            if (Model_Book::find($bookId)) {
+                // xóa sách
+                Model_Book::find($bookId)->delete();
+
+                $data['serverMessage'] = str_replace('****', $bookId, $message['MSG0015']);
+                return Response::forge(View::forge('bookmaster/book', $data, false));
+            }
+
+            $data['bookId'] = $bookId;
+            $data['serverMessage'] = str_replace('****', $bookId, $message['MSG0014']);
+            return Response::forge(View::forge('bookmaster/book', $data, false));
         } else {
             return Response::forge(View::forge('bookmaster/book', $data, false));
         }
