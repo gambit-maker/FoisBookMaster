@@ -4,7 +4,6 @@ use Fuel\Core\Controller;
 use Fuel\Core\Debug;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
-use Fuel\Core\Validation;
 use Fuel\Core\View;
 
 
@@ -46,29 +45,28 @@ class Controller_Book extends Controller
         if (isset($_POST["tracuu_btn"])) {
             try {
                 $bookId = Input::post('id');
-                // tìm sách với ID
-                $data['searchBook'] = Model_Book::find($bookId);
+                // tìm sách với ID Input của user
+                $data['bookInfo'] = Model_Book::find($bookId);
                 $data['bookId'] = $bookId;
 
                 // lấy thông tin sách nếu tìm thấy                
-                if ($data['searchBook']) {
-                    $data['bookTitle'] = $data['searchBook']['book_title'];
-                    $data['author'] = $data['searchBook']['author_name'];
-                    $data['publisher'] = $data['searchBook']['publisher'];
+                if ($data['bookInfo']) {
+                    $data['bookTitle'] = $data['bookInfo']['book_title'];
+                    $data['author'] = $data['bookInfo']['author_name'];
+                    $data['publisher'] = $data['bookInfo']['publisher'];
 
-                    $publicationDay = $data['searchBook']['publication_day'];
+                    $publicationDay = $data['bookInfo']['publication_day'];
                     $publicationDay = explode('-', $publicationDay);
-
                     $data['year'] = $publicationDay[0];
                     $data['month'] = $publicationDay[1];
                     $data['date'] = $publicationDay[2];
                 }
 
                 // gắn tin nhắn
-                $data['serverMessage'] = $data['searchBook'] ? $message['MSG0003'] : $message['MSG0004'] . $bookId;
+                $data['serverMessage'] = $data['bookInfo'] ? $message['MSG0003'] : $message['MSG0004'] . $bookId;
 
                 return Response::forge(View::forge('bookmaster/book', $data, false));
-            } catch (Exception $e) {
+            } catch (Exception $e) { // xử lý ngoại lệ server
                 Debug::dump($e);
                 $data['bookId'] = $bookId;
                 $data['serverMessage'] = $message['MSG0005'];
@@ -79,18 +77,17 @@ class Controller_Book extends Controller
         else if (isset($_POST["them_btn"])) {
             try {
                 // lấy thông tin Input
-                $data['bookId'] = Input::post('id');
-                $data['bookTitle'] = Input::post('title');
-                $data['author'] = Input::post('author');
-                $data['publisher'] = Input::post('publisher');
-                $data['year'] = Input::post('year');
-                $data['month'] = Input::post('month');
-                $data['date'] = Input::post('date');
-                if (!checkdate($data['month'], $data['date'], $data['year'])) {
+                $userInput = $this->getInput();
+                foreach ($userInput as $key => $value) {
+                    $data[$key] = $value;
+                }
+
+                // kiểm tra ngày có hợp lệ        
+                if (!$this->validDate($data['month'], $data['date'], $data['year'])) {
                     $data['serverMessage'] = $message['MSG0016'];
                     return Response::forge(View::forge('bookmaster/book', $data, false));
                 }
-                // xử lý BookId        
+                // xử lý BookId để thêm sách       
                 if (Model_Book::find($data['bookId'])) {
                     $data['serverMessage'] = str_replace('****', $data['bookId'], $message['MSG0011']);
                     return Response::forge(View::forge('bookmaster/book', $data, false));
@@ -110,7 +107,44 @@ class Controller_Book extends Controller
                     $data['serverMessage'] = $message['MSG0012'];
                     return Response::forge(View::forge('bookmaster/book', $data, false));
                 }
-            } catch (Exception $e) {
+            } catch (Exception $e) { // xử lý ngoại lệ server                
+                Debug::dump($e);
+                $data['serverMessage'] = $message['MSG0005'];
+                return Response::forge(View::forge('bookmaster/book', $data, false));
+            }
+        }
+        // xử lý thông tin khi nhấn Update
+        else if (isset($_POST["update_btn"])) {
+            try {
+                // lấy thông tin Input
+                $userInput = $this->getInput();
+                foreach ($userInput as $key => $value) {
+                    $data[$key] = $value;
+                }
+                // kiểm tra ngày có hợp lệ
+                if (!$this->validDate($data['month'], $data['date'], $data['year'])) {
+                    $data['serverMessage'] = $message['MSG0016'];
+                    return Response::forge(View::forge('bookmaster/book', $data, false));
+                }
+
+                // xử lý BookId để Update
+                $bookInfo = Model_Book::find($data['bookId']);
+                if ($bookInfo) {
+                    //update Book
+                    $bookInfo->book_id = $data['bookId'];
+                    $bookInfo->book_title = $data['bookTitle'];
+                    $bookInfo->author_name = $data['author'];
+                    $bookInfo->publisher = $data['publisher'];
+                    $bookInfo->publication_day = $data['year'] . "-" . $data['month'] . "-" . $data['date'];
+                    $bookInfo->save();
+
+                    $data['serverMessage'] = $message['MSG0013'];
+                    return Response::forge(View::forge('bookmaster/book', $data, false));
+                }
+
+                $data['serverMessage'] = str_replace('****', $data['bookId'], $message['MSG0014']);
+                return Response::forge(View::forge('bookmaster/book', $data, false));
+            } catch (Exception $e) { // xử lý ngoại lệ server
                 Debug::dump($e);
                 $data['serverMessage'] = $message['MSG0005'];
                 return Response::forge(View::forge('bookmaster/book', $data, false));
@@ -118,5 +152,25 @@ class Controller_Book extends Controller
         } else {
             return Response::forge(View::forge('bookmaster/book', $data, false));
         }
+    }
+
+    public function validDate($month, $day, $year)
+    {
+        if (is_numeric($month) && is_numeric($day) && is_numeric($year) && checkdate($month, $day, $year)) return true;
+        return false;
+    }
+
+    public function getInput()
+    {
+        $input = [];
+        $input['bookId'] = Input::post('id');
+        $input['bookTitle'] = Input::post('title');
+        $input['author'] = Input::post('author');
+        $input['publisher'] = Input::post('publisher');
+        $input['year'] = Input::post('year');
+        $input['month'] = Input::post('month');
+        $input['date'] = Input::post('date');
+
+        return $input;
     }
 }

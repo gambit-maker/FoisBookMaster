@@ -1,5 +1,6 @@
 const tracuuBtn = document.querySelector("#tracuu_btn");
 const themBtn = document.querySelector("#them_btn");
+const updateBtn = document.querySelector("#update_btn");
 const bookId = document.querySelector("#bookId");
 const bookTitlte = document.querySelector("#book_title");
 const author = document.querySelector("#author");
@@ -31,7 +32,6 @@ const messageObj = {
 function stringCheck(thisval) {
   var flag = false;
   if (thisval.match(/[^\x00-\x80]/)) {
-    //or /[^\0-\127]/ decimal representation
     flag = true;
   }
   return flag;
@@ -53,19 +53,7 @@ function checkValue2Condition(id, con1, con2) {
   return message;
 }
 
-tracuuBtn.addEventListener("click", (e) => {
-  const message = checkValue2Condition(
-    bookId.value,
-    messageObj["MSG0001"],
-    messageObj["MSG0002"]
-  );
-  if (message !== null && message !== "") {
-    alert(message);
-    e.preventDefault();
-  }
-});
-
-themBtn.addEventListener("click", (e) => {
+function checkAllInput() {
   const message = [];
   const bookIdMessage = checkValue2Condition(
     bookId.value,
@@ -101,6 +89,33 @@ themBtn.addEventListener("click", (e) => {
 
   if (dateMessage !== null && dateMessage !== "")
     message.push(dateMessage + " (Ngày)");
+
+  return message;
+}
+
+tracuuBtn.addEventListener("click", (e) => {
+  const message = checkValue2Condition(
+    bookId.value,
+    messageObj["MSG0001"],
+    messageObj["MSG0002"]
+  );
+  if (message !== null && message !== "") {
+    alert(message);
+    e.preventDefault();
+  }
+});
+
+themBtn.addEventListener("click", (e) => {
+  const message = checkAllInput();
+  if (message !== null && message.length > 0) {
+    alert(message.join("\n"));
+    console.log(message);
+    e.preventDefault();
+  }
+});
+
+updateBtn.addEventListener("click", (e) => {
+  const message = checkAllInput();
   if (message !== null && message.length > 0) {
     alert(message.join("\n"));
     console.log(message);

@@ -105,7 +105,7 @@
                     <?php echo Form::button('them_btn', 'Thêm', ['class' => 'btn btn-primary', 'style' => 'width: 80px', 'id' => 'them_btn']) ?>
                 </div>
                 <div class="pl-5">
-                    <?php echo Form::button('update_btn', 'Update', ['class' => 'btn btn-warning', 'style' => 'width: 80px']) ?>
+                    <?php echo Form::button('update_btn', 'Update', ['class' => 'btn btn-warning', 'style' => 'width: 80px', 'id' => 'update_btn']) ?>
                 </div>
                 <div class="pl-5">
                     <?php echo Form::button('xoa_btn', 'Xóa', ['class' => 'btn btn-danger', 'style' => 'width: 80px']) ?>
