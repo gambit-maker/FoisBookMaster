@@ -30,7 +30,6 @@
             <?php
             echo Form::label('Book ID :', 'id');
             echo Form::button('tracuu_btn', 'Tra cứu', ['class' => 'btn btn-success', 'id' => 'tracuu_btn']);
-            // 'onclick' => 'checkValueBookId()'
             ?>
             <div class="book_input">
                 <?php
