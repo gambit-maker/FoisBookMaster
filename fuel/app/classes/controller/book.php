@@ -152,19 +152,26 @@ class Controller_Book extends Controller
         }
         // xử lý thông tin khi nhấn xóa dữ liệu
         else if (isset($_POST["xoa_btn"])) {
-            $bookId = Input::post('id');
-            // kiểm tra BookId tồn tại
-            if (Model_Book::find($bookId)) {
-                // xóa sách
-                Model_Book::find($bookId)->delete();
+            try {
+                $bookId = Input::post('id');
+                // kiểm tra BookId tồn tại
+                if (Model_Book::find($bookId)) {
+                    // xóa sách
+                    Model_Book::find($bookId)->delete();
 
-                $data['serverMessage'] = str_replace('****', $bookId, $message['MSG0015']);
+                    $data['serverMessage'] = str_replace('****', $bookId, $message['MSG0015']);
+                    return Response::forge(View::forge('bookmaster/book', $data, false));
+                }
+
+                $data['bookId'] = $bookId;
+                $data['serverMessage'] = str_replace('****', $bookId, $message['MSG0014']);
+                return Response::forge(View::forge('bookmaster/book', $data, false));
+            } catch (Exception $e) {
+                // Debug::dump($e);
+                $data['bookId'] = $bookId;
+                $data['serverMessage'] = $message['MSG0005'];
                 return Response::forge(View::forge('bookmaster/book', $data, false));
             }
-
-            $data['bookId'] = $bookId;
-            $data['serverMessage'] = str_replace('****', $bookId, $message['MSG0014']);
-            return Response::forge(View::forge('bookmaster/book', $data, false));
         } else {
             return Response::forge(View::forge('bookmaster/book', $data, false));
         }
