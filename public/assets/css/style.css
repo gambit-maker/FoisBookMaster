@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(to right, #ffffff, #abbaab);
+
+}
+
+.container {
+    /* margin: auto; */
+    width: 500px;
+    height: 580px;
+    background: white;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+}
+
+#close_anchor {
+    float: right;
+    direction: none;
+}
+
+#tracuu_btn {
+    float: right;
+    margin-top: 30px;
+}
+
+/* style="overflow: hidden; padding-right: .5rem" */
+
+.book_input {
+    overflow: hidden;
+}
+
+.pibliser_day input {
+    text-align: center;
+}
+
+.crud_btn button {
+    width: 80px;
+}

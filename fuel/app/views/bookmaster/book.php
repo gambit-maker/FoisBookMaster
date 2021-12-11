@@ -12,16 +12,16 @@
     use Fuel\Core\Form;
 
     echo Asset::css('bootstrap.min.css');
-
+    echo Asset::css('style.css');
     ?>
 </head>
 
-<body style="background-color: #F5EEDC;">
+<body>
 
-    <div style="margin: auto; width: 500px;" class="pt-5 ">
+    <div class="container pt-5 ">
         <h4>
             Book maintence master
-            <a href="" id="close_anchor" style="float: right; text-decoration:none;">Đóng</a>
+            <a href="" id="close_anchor">Đóng</a>
         </h4>
         <?php echo Form::open(['action' => 'book/checkButtonClicked', 'method' => 'post']); ?>
 
@@ -29,10 +29,10 @@
         <div>
             <?php
             echo Form::label('Book ID :', 'id');
-            echo Form::button('tracuu_btn', 'Tra cứu', ['class' => 'btn btn-primary', 'style' => 'float: right; margin-top:30px', 'id' => 'tracuu_btn']);
+            echo Form::button('tracuu_btn', 'Tra cứu', ['class' => 'btn btn-success', 'id' => 'tracuu_btn']);
             // 'onclick' => 'checkValueBookId()'
             ?>
-            <div style="overflow: hidden; padding-right: .5rem">
+            <div class="book_input">
                 <?php
                 echo Form::input('id', $bookId, ['id' => 'bookId', 'class' => 'form-control', 'style' => 'width:80%']);
 
@@ -42,7 +42,7 @@
 
         <!-- Book title -->
 
-        <div style="padding-top: 10px;">
+        <div class="pt-2">
             <?php
             echo Form::label('Book title :', 'title');
             echo Form::input('title', $bookTitle, ['class' => 'form-control', 'id' => 'book_title']);
@@ -50,7 +50,7 @@
         </div>
 
         <!-- Tên tác giã -->
-        <div style="padding-top: 10px">
+        <div class="pt-2">
             <?php
             echo Form::label('Tên tác giả :', 'author');
             echo Form::input('author', $author, ['class' => 'form-control', 'id' => 'author']);
@@ -58,7 +58,7 @@
         </div>
 
         <!-- Nhà xuất bản -->
-        <div style="padding-top: 10px;">
+        <div class="pt-2">
             <?php
             echo Form::label('Nhà xuất bản :', 'publisher');
             echo Form::input('publisher', $publisher, ['class' => 'form-control', 'id' => 'publisher']);
@@ -66,52 +66,55 @@
         </div>
 
         <!-- thời gian xuất bản -->
-        <div style="padding-top: 10px">
+        <div class="pt-2">
             <?php
             echo Form::label('Ngày xuất bản: ');
             ?>
 
-            <div class="d-flex flex-row">
-                <div style="width: 25%;">
-                    <?php
-                    echo Form::input('year', $year, ['class' => 'form-control', 'style' => 'text-align:center;', 'id' => 'year']);
-                    ?>
-                </div>
-                <div class="pt-2">
+            <div class="pibliser_day d-flex flex-row">
+                <div class="m-2">
                     <?php echo Form::label('Năm', 'year'); ?>
                 </div>
-
-                <div style="width: 10%;">
+                <div>
                     <?php
-                    echo Form::input('month', $month, ['class' => 'form-control', 'style' => 'text-align:center;', 'id' => 'month']);
+                    echo Form::input('year', $year, ['class' => 'form-control', 'id' => 'year']);
                     ?>
                 </div>
-                <div class="pt-2">
+
+
+                <div class="m-2">
                     <?php echo Form::label('Tháng', 'month'); ?>
                 </div>
-
-                <div style="width: 10%;">
+                <div>
                     <?php
-                    echo Form::input('date', $date, ['class' => 'form-control', 'style' => 'text-align:center;', 'id' => 'date']);
+                    echo Form::input('month', $month, ['class' => 'form-control', 'id' => 'month']);
                     ?>
                 </div>
-                <div class="pt-2">
+
+
+                <div class="m-2">
                     <?php echo Form::label('Ngày', 'date'); ?>
                 </div>
+                <div>
+                    <?php
+                    echo Form::input('date', $date, ['class' => 'form-control', 'id' => 'date']);
+                    ?>
+                </div>
+
             </div>
 
-            <div class="d-flex flex-row pt-3 float-right">
+            <div class="crud_btn d-flex flex-row pt-3 float-right">
                 <div class="pl-5">
-                    <?php echo Form::button('them_btn', 'Thêm', ['class' => 'btn btn-primary', 'style' => 'width: 80px', 'id' => 'them_btn']) ?>
+                    <?php echo Form::button('them_btn', 'Thêm', ['class' => 'btn btn-primary', 'id' => 'them_btn']) ?>
                 </div>
                 <div class="pl-5">
-                    <?php echo Form::button('update_btn', 'Update', ['class' => 'btn btn-warning', 'style' => 'width: 80px', 'id' => 'update_btn']) ?>
+                    <?php echo Form::button('update_btn', 'Update', ['class' => 'btn btn-warning', 'id' => 'update_btn']) ?>
                 </div>
                 <div class="pl-5">
-                    <?php echo Form::button('xoa_btn', 'Xóa', ['class' => 'btn btn-danger', 'style' => 'width: 80px', 'id' => 'xoa_btn']) ?>
+                    <?php echo Form::button('xoa_btn', 'Xóa', ['class' => 'btn btn-danger', 'id' => 'xoa_btn']) ?>
                 </div>
                 <div class="pl-5">
-                    <?php echo Form::button('clear_btn', 'Clear', ['class' => 'btn btn-secondary', 'style' => 'width: 80px', 'id' => 'clear_btn']) ?>
+                    <?php echo Form::button('clear_btn', 'Clear', ['class' => 'btn btn-secondary', 'id' => 'clear_btn']) ?>
                 </div>
             </div>
         </div>
