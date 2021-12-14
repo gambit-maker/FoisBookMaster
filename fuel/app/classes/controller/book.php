@@ -1,11 +1,9 @@
 <?php
 
 use Fuel\Core\Controller;
-use Fuel\Core\Debug;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
-
 
 class Controller_Book extends Controller
 {
@@ -40,7 +38,6 @@ class Controller_Book extends Controller
         $data['insertDay'] = '';
         $data['updateDay'] = '';
 
-
         // xử lý thông tin khi nhấn tra cứu
         if (isset($_POST["tracuu_btn"])) {
             try {
@@ -49,12 +46,11 @@ class Controller_Book extends Controller
                 $data['bookInfo'] = Model_Book::find($bookId);
                 $data['bookId'] = $bookId;
 
-                // lấy thông tin sách nếu tìm thấy                
+                // lấy thông tin sách nếu tìm thấy
                 if ($data['bookInfo']) {
                     $data['bookTitle'] = $data['bookInfo']['book_title'];
                     $data['author'] = $data['bookInfo']['author_name'];
                     $data['publisher'] = $data['bookInfo']['publisher'];
-
                     $publicationDay = $data['bookInfo']['publication_day'];
                     $publicationDay = explode('-', $publicationDay);
                     $data['year'] = $publicationDay[0];
@@ -74,7 +70,7 @@ class Controller_Book extends Controller
             }
         }
         // xử lý thông tin khi nhấn thêm
-        else if (isset($_POST["them_btn"])) {
+        elseif (isset($_POST["them_btn"])) {
             try {
                 // lấy thông tin Input
                 $userInput = $this->getInput();
@@ -82,12 +78,12 @@ class Controller_Book extends Controller
                     $data[$key] = $value;
                 }
 
-                // kiểm tra ngày có hợp lệ        
+                // kiểm tra ngày có hợp lệ
                 if (!$this->validDate($data['month'], $data['date'], $data['year'])) {
                     $data['serverMessage'] = $message['MSG0016'];
                     return Response::forge(View::forge('bookmaster/book', $data, false));
                 }
-                // xử lý BookId để thêm sách       
+                // xử lý BookId để thêm sách
                 if (Model_Book::find($data['bookId'])) {
                     $data['serverMessage'] = str_replace('****', $data['bookId'], $message['MSG0011']);
                     return Response::forge(View::forge('bookmaster/book', $data, false));
@@ -107,14 +103,14 @@ class Controller_Book extends Controller
                     $data['serverMessage'] = $message['MSG0012'];
                     return Response::forge(View::forge('bookmaster/book', $data, false));
                 }
-            } catch (Exception $e) { // xử lý ngoại lệ server                
-                // Debug::dump($e);
+            } catch (Exception $e) { // xử lý ngoại lệ server
+                Debug::dump($e);
                 $data['serverMessage'] = $message['MSG0005'];
                 return Response::forge(View::forge('bookmaster/book', $data, false));
             }
         }
         // xử lý thông tin khi nhấn Update
-        else if (isset($_POST["update_btn"])) {
+        elseif (isset($_POST["update_btn"])) {
             try {
                 // lấy thông tin Input
                 $userInput = $this->getInput();
@@ -135,7 +131,8 @@ class Controller_Book extends Controller
                     $bookInfo->book_title = $data['bookTitle'];
                     $bookInfo->author_name = $data['author'];
                     $bookInfo->publisher = $data['publisher'];
-                    $bookInfo->publication_day = $data['year'] . "-" . $data['month'] . "-" . $data['date'];
+                    $bookInfo->publication_day =
+                        $data['year'] . "-" . $data['month'] . "-" . $data['date'];
                     $bookInfo->save();
 
                     $data['serverMessage'] = $message['MSG0013'];
@@ -151,14 +148,13 @@ class Controller_Book extends Controller
             }
         }
         // xử lý thông tin khi nhấn xóa dữ liệu
-        else if (isset($_POST["xoa_btn"])) {
+        elseif (isset($_POST["xoa_btn"])) {
             try {
                 $bookId = Input::post('id');
                 // kiểm tra BookId tồn tại
                 if (Model_Book::find($bookId)) {
                     // xóa sách
                     Model_Book::find($bookId)->delete();
-
                     $data['serverMessage'] = str_replace('****', $bookId, $message['MSG0015']);
                     return Response::forge(View::forge('bookmaster/book', $data, false));
                 }
@@ -179,7 +175,9 @@ class Controller_Book extends Controller
 
     public function validDate($month, $day, $year)
     {
-        if (is_numeric($month) && is_numeric($day) && is_numeric($year) && checkdate($month, $day, $year)) return true;
+        if (is_numeric($month) && is_numeric($day) && is_numeric($year) && checkdate($month, $day, $year)) {
+            return true;
+        }
         return false;
     }
 

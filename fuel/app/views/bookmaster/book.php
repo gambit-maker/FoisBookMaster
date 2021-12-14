@@ -33,7 +33,7 @@
             ?>
             <div class="book_input">
                 <?php
-                echo Form::input('id', $bookId, ['id' => 'bookId', 'class' => 'form-control', 'style' => 'width:80%']);
+                echo Form::input('id', $bookId, ['id' => 'bookId', 'class' => 'form-control', 'style' => 'width:80%', 'maxlength' => '4', 'size' => '4']);
 
                 ?>
             </div>

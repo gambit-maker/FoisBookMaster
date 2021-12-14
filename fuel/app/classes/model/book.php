@@ -1,8 +1,7 @@
 <?php
 
-use Fuel\Core\DB;
-
 class Model_Book extends Orm\Model
+
 {
     protected static $_connection = 'development';
     protected static $_table_name = 'book';
@@ -13,6 +12,6 @@ class Model_Book extends Orm\Model
         'author_name',
         'publisher',
         'publication_day',
-        'insert_day'
+        'insert_day',
     ];
 }

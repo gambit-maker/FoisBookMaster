@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    height: 100vh;
+    color: #333;
+    background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+main {
+    position: relative;
+    width: 100rem;
+    height: 60rem;
+    background-color: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(200px);
+    filter: blur();
+    box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.25);
+    border-radius: 9px;
+    overflow: hidden;
+    display: flex;
+}
+
+.play {
+    flex: 50%;
+    padding: 9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.75s;
+}
+
+
+.gussingNum {
+    position: relative;
+    font-size: 4rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.inputNumber {
+    width: 300px;
+    height: 100px;
+    font-size: 100px;
+    text-align: center;
+}
+
+.center {
+    position: absolute;
+    top: 40%;
+    transform: translate(0, -50%);
+    padding: 10px;
+}
+
+.history {
+    position: relative;
+    width: 300px;
+}
+
+.history_table {
+    position: absolute;
+    padding-bottom: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.history_table tbody {
+    position: absolute;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.history_table tbody::-webkit-scrollbar {
+    display: none;
+}
+
+.history_table th,
+td {
+    text-align: center;
+    padding: 8px;
+    font-size: 20px;
+}
+
+.history_table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: #040303;
+}
+
+section {
+    background-color: rgba(255, 255, 255, 0.4);
+    font-weight: 700;
+    opacity: 1;
+}
+
+
+
+.btn {
+    position: absolute;
+    color: #444;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 400;
+    transition: all 0.2s;
+
+    background-color: white;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+
+    padding: 0.7rem 2.5rem;
+    border-radius: 50rem;
+    box-shadow: 0 1.75rem 3.5rem rgba(0, 0, 0, 0.1);
+}
+
+.btn_newgame {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 4rem;
+}
+
+.guessingButton {
+    position: absolute;
+    top: 110%;
+    right: 30%;
+
+}
+
+.guessingButton:active {
+    transform: translateY(3px)
+}
+
+
+.btn_newgame:active {
+    transform: translate(-50%, 3px);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+}
+
+
+.btn:focus {
+    outline: none;
+}
+
+
+.hidden {
+    display: none;
+}
