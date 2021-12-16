@@ -12,6 +12,10 @@ let playAttempt = 1;
 let numberAttempt = 15;
 let gameOver = false;
 
+const isNum = function (input) {
+  return /^\d+$/.test(input);
+};
+
 const findDuplicates = (arr) =>
   arr.filter((item, index) => arr.indexOf(item) != index);
 
@@ -19,6 +23,7 @@ const checkInput = function (value) {
   const duplicateArr = findDuplicates(value.split(""));
   if (value < 1000) return false;
   if (duplicateArr.length > 0) return false;
+  if (!isNum(value)) return false;
   return true;
 };
 
