@@ -23,7 +23,7 @@
             Book maintence master
             <a href="" id="close_anchor">Đóng</a>
         </h4>
-        <?php echo Form::open(['action' => 'book/checkButtonClicked', 'method' => 'post']); ?>
+        <?php echo Form::open(['action' => 'book/index', 'method' => 'post', 'id' => 'formId']); ?>
 
         <!-- Book ID + Tra cứu -->
         <div>
@@ -127,8 +127,6 @@
         alert("<?php echo $serverMessage; ?>");
     <?php endif; ?>
 </script>
-
-
 
 <?php echo Asset::js('checkValidation.js'); ?>
 

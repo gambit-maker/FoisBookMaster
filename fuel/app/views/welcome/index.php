@@ -78,7 +78,7 @@
 </body>
 <script>
 	document.querySelector("#bookProject").addEventListener('click', function(e) {
-		window.open('book/checkButtonClicked');
+		window.open('book/index');
 		e.preventDefault();
 	})
 </script>

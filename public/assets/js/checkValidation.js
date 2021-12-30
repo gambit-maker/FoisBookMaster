@@ -4,6 +4,7 @@ const updateBtn = document.querySelector("#update_btn");
 const xoaBtn = document.querySelector("#xoa_btn");
 const clearBtn = document.querySelector("#clear_btn");
 const closeAnchor = document.querySelector("#close_anchor");
+const formId = document.querySelector("#formId");
 
 const bookId = document.querySelector("#bookId");
 const bookTitlte = document.querySelector("#book_title");
@@ -111,6 +112,8 @@ tracuuBtn.addEventListener("click", (e) => {
   if (message !== null && message !== "") {
     alert(message);
     e.preventDefault();
+  } else {
+    formId.action = "/book/traCuu";
   }
 });
 
@@ -120,6 +123,8 @@ themBtn.addEventListener("click", (e) => {
     alert(message.join("\n"));
     console.log(message);
     e.preventDefault();
+  } else {
+    formId.action = "/book/them";
   }
 });
 
@@ -129,6 +134,8 @@ updateBtn.addEventListener("click", (e) => {
     alert(message.join("\n"));
     console.log(message);
     e.preventDefault();
+  } else {
+    formId.action = "/book/update";
   }
 });
 
@@ -137,6 +144,8 @@ xoaBtn.addEventListener("click", (e) => {
   if (message !== null && message !== "") {
     alert(message);
     e.preventDefault();
+  } else {
+    formId.action = "/book/delete";
   }
 });
 

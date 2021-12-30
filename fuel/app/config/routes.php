@@ -40,5 +40,5 @@ return array(
 	 */
 
 	'hello(/:name)?' => array('welcome/hello', 'name' => 'hello'),
-	'book/checkButtonClicked' => ['book/checkButtonClicked', 'name' => 'bookmaster']
+	'book/index' => ['book/index', 'name' => 'bookmaster']
 );

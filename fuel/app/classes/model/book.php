@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\DB;
+use Fuel\Core\Debug;
 
 class Model_Book extends Orm\Model
 
@@ -20,45 +21,42 @@ class Model_Book extends Orm\Model
 
     public function getBookWithId($bookId)
     {
-        $data = [];
         $query = DB::query('SELECT * FROM book WHERE book_id = :book_id');
         $query->param('book_id', $bookId);
-        $result = $query->as_assoc()->execute($this::$_connection);
-        foreach ($result as $item) {
-            array_push($data, $item);
-        }
-        return $data;
+        $result = $query->execute($this::$_connection);
+        // Debug::dump($result->as_array());
+        return  $result->as_array();
     }
 
-    public function insertBook($bookId, $bookTitle, $author, $publisher, $publicationDay, $insertDay)
+    public function insertBook($data)
     {
         $query = DB::insert('book');
         $query->set(
             [
-                'book_id' => $bookId,
-                'book_title' => $bookTitle,
-                'author_name' => $author,
-                'publisher' => $publisher,
-                'publication_day' => $publicationDay,
-                'insert_day' => $insertDay
+                'book_id' => $data['bookId'],
+                'book_title' => $data['bookTitle'],
+                'author_name' => $data['author'],
+                'publisher' => $data['publisher'],
+                'publication_day' => $data['publicationDay'],
+                'insert_day' => $data['insertDay']
             ]
         );
         $query->execute($this::$_connection);
     }
 
-    public function updateBook($bookId, $bookTitle, $author, $publisher, $publicationDay, $updateDay)
+    public function updateBook($data)
     {
         $query = DB::update('book');
         $query->set(
             [
-                'book_title' => $bookTitle,
-                'author_name' => $author,
-                'publisher' => $publisher,
-                'publication_day' => $publicationDay,
-                'update_day' => $updateDay
+                'book_title' => $data['bookTitle'],
+                'author_name' => $data['author'],
+                'publisher' => $data['publisher'],
+                'publication_day' => $data['publicationDay'],
+                'update_day' => $data['updateDay']
             ]
         );
-        $query->where('book_id', '=', $bookId);
+        $query->where('book_id', '=', $data['bookId']);
         $query->execute($this::$_connection);
     }
 
