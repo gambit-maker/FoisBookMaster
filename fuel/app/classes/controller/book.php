@@ -40,20 +40,25 @@ class Controller_Book extends Controller
     // xử lý khi ấn tra cứu
     public function action_traCuu()
     {
-        $data = $this->defaultViewData();
         // lấy Input Id từ user        
-        $data['bookId'] = Input::post('id');
+        $bookId = Input::post('id');
         try {
-            if (Model_Book::find($data['bookId'])) {
-                // lấy data từ bookId     
-                $data = $this->traCuu($data['bookId']);
+            // lấy data từ bookId     
+            $data = $this->traCuu($bookId);
+            if (empty($data['bookId'])) {
+                //dữ liệu rỗng cho việc hiển thị
+                $data = $this->defaultViewData();
+                //hiển thị bookId đã nhập                
+                $data['bookId'] = $bookId;
                 // gắn tin nhắn                
-                $data['serverMessage'] = $this->message['MSG0003'];
-            } else {
                 $data['serverMessage'] = $this->message['MSG0004'] . $data['bookId'];
+            } else {
+                $data['serverMessage'] = $this->message['MSG0003'];
             }
         } catch (Exception $e) {
             // Debug::dump($e);
+            $data = $this->defaultViewData();
+            $data['bookId'] = $bookId;
             $data['serverMessage'] = $this->message['MSG0005'];
         }
         return Response::forge(View::forge('bookmaster/book', $data, false));
