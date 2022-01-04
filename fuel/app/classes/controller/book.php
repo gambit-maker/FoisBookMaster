@@ -33,25 +33,24 @@ class Controller_Book extends Controller
 
     public function action_index()
     {
-        $data = $this->defaultViewData([]);
-
+        $data = $this->defaultViewData();
         return Response::forge(View::forge('bookmaster/book', $data, false));
     }
 
     // xử lý khi ấn tra cứu
     public function action_traCuu()
     {
-        $data = $this->defaultViewData([]);
+        $data = $this->defaultViewData();
         // lấy Input Id từ user        
         $data['bookId'] = Input::post('id');
         try {
-            // lấy data từ bookId     
-            $data = $this->traCuu($data['bookId'], $data);
-            // gắn tin nhắn                
-            if (empty($data['bookTitle'])) {
-                $data['serverMessage'] = $this->message['MSG0004'] . $data['bookId'];
-            } else {
+            if (Model_Book::find($data['bookId'])) {
+                // lấy data từ bookId     
+                $data = $this->traCuu($data['bookId']);
+                // gắn tin nhắn                
                 $data['serverMessage'] = $this->message['MSG0003'];
+            } else {
+                $data['serverMessage'] = $this->message['MSG0004'] . $data['bookId'];
             }
         } catch (Exception $e) {
             // Debug::dump($e);
@@ -122,7 +121,7 @@ class Controller_Book extends Controller
     // xử lý khi ấn delete
     public function action_delete()
     {
-        $data = $this->defaultViewData([]);
+        $data = $this->defaultViewData();
         // lấy Input Id từ user
         $data['bookId'] = Input::post('id');
         try {
@@ -144,11 +143,11 @@ class Controller_Book extends Controller
 
 
     // tra cứu sách và trả về dữ liệu của data view
-    public function traCuu($bookId, $dataArr)
+    public function traCuu($bookId)
     {
+        $dataArr = [];
         $model = new Model_Book();
         $book = $model->getBookWithId($bookId);
-        $dataArr['bookId'] = $bookId;
         if (count($book) > 0) {
             $book = $book[0];
             $dataArr['bookId'] = $book['book_id'];
@@ -166,8 +165,9 @@ class Controller_Book extends Controller
     }
 
     // khởi tạo giá trị ban đầu để hiển thị cho các trường rỗng
-    public function defaultViewData($data)
+    public function defaultViewData()
     {
+        $data = [];
         $data['bookId'] = '';
         $data['bookTitle'] = '';
         $data['author'] = '';
